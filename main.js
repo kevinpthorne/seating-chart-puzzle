@@ -198,7 +198,7 @@ class Desk {
 
 const cannotShare = (a, b) => a.id != b.id;
 const cannotNeighbor = (a, b) => !areNeighboring(a.location, b.location);
-const cannotFace = (a, b) => !a.isFacing(b, 360) && cannotNeighbor(a,b);
+const cannotFace = (a, b) => !a.isFacing(b, 150) && cannotNeighbor(a,b);
 
 // Input
 
