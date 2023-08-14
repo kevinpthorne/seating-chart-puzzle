@@ -10,7 +10,7 @@ Rewrite the problem in to a Constraint-Satisfiability Problem (CSP). With some s
 
 ## Current Implementation
 
-This currently uses a modified [SolverJS class](https://github.com/johannesheesterman/SolverJS) that does naive backtracking to explore all combinations. Input data is static.
+This currently uses a modified [SolverJS class](https://github.com/johannesheesterman/SolverJS) that does naive backtracking to explore all combinations. Input data is statically defined in code.
 
 ## Goals
 
