@@ -16,7 +16,9 @@ This currently uses a modified [SolverJS class](https://github.com/johannesheest
 
 Students are just `const studentNames: string[]`.
 
-Desks have a unique `id`, `location: int[2]`, and `heading` (but heading is broken currently). The desk arrangement is defined as `const deskArrangement: Desk[]`.
+Desks have a unique `id`, `location: Point`, and `heading: Vector2`. The desk arrangement is defined as `const deskArrangement: Desk[]`.
+
+`Point` and `Vector2` are trivally defined.
 
 ### Usage
 
@@ -35,7 +37,7 @@ yay
 ## Goals
 
 - [x] Naive implementation
-- [ ] Fix `cannotFace` to do proper vector maths
+- [x] Fix `cannotFace` to do proper vector maths
 - [ ] Test limits
 - [ ] Allow User input for students, desk-layout (via web app)
 - [ ] Publish web app

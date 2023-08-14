@@ -116,31 +116,62 @@ function areNeighboring(locationA, locationB) {
   return false;
 }
 
-// TODO this is actually broken
-function areFacingEachOther(heading1, location1, heading2, location2, fieldOfViewAngle) {
-  const headingToVector = {
-    "North": [0, 1],
-    "South": [0, -1],
-    "East": [1, 0],
-    "West": [-1, 0]
-  };
-
-  const vector1 = headingToVector[heading1];
-  const vector2 = headingToVector[heading2];
-
-  if (!vector1 || !vector2) {
-    throw new Error("Invalid heading");
+class Point {
+  constructor(x, y) {
+      this.x = x;
+      this.y = y;
   }
-
-  const dx = location2[0] - location1[0];
-  const dy = location2[1] - location1[1];
-  //const c = Math.sqrt(a ** 2 + b ** 2); // Pythagorean theorem
-
-  const location1SideAngleRadians = Math.atan2(dy, dx);
-  const location1SideAngleDegrees = location1SideAngleRadians * 180 / Math.PI;
-
-  return location1SideAngleDegrees > (fieldOfViewAngle / 2);
 }
+class Vector2 {
+  constructor(x, y) {
+      this.x = x;
+      this.y = y;
+  }
+}
+
+function magnitude(vector2) {
+  return Math.sqrt(vector2.x ** 2 + vector2.y ** 2);
+}
+function dotProduct(vector2A, vector2B) {
+  return vector2A.x*vector2B.x + vector2A.y*vector2B.y;
+}
+function toDegrees(radians) {
+  return radians * 180 / Math.PI;
+}
+function angleBetween(vector2A, vector2B) {
+  const magU = magnitude(vector2A);
+  const magV = magnitude(vector2B);
+  const dproduct = dotProduct(vector2A, vector2B);
+
+  return Math.acos(dproduct / (magU * magV)); // radians
+}
+
+
+function areFacingEachOther(heading1, location1, heading2, location2, fieldOfViewInDegrees) {
+  // super official formula: https://youtu.be/dYPRYO8QhxU?t=51
+
+  //side 1
+  const dx1 = location2.x - location1.x;
+  const dy1 = location2.y - location1.y;
+
+  const v1 = new Vector2(dx1, dy1);
+  const location1Angle = toDegrees(angleBetween(heading1, v1));
+
+  //side 2
+  const dx2 = location1.x - location2.x;
+  const dy2 = location1.y - location2.y;
+
+  const v2 = new Vector2(dx2, dy2);
+  const location2Angle = toDegrees(angleBetween(heading2, v2));
+
+  return location1Angle < (fieldOfViewInDegrees / 2) && location2Angle < (fieldOfViewInDegrees / 2);
+}
+
+const NORTH = new Vector2(0, 1);
+const SOUTH = new Vector2(0, -1);
+const EAST = new Vector2(1, 0);
+const WEST = new Vector2(-1, 0);
+
 
 function acceptAllPairs(array, visit) {
   for (let i = 0; i < array.length; i++) {
@@ -199,25 +230,25 @@ const studentNames = [
   "Grace",
 ];
 const deskArrangement = [
-  new Desk('A', [0, 0], "North"),
-  new Desk('B', [0, 1], "West"),
-  new Desk('C', [1, 1], "South"),
-  new Desk('D', [1, 0], "East"),
+  new Desk('A', new Point(0, 0), NORTH),
+  new Desk('B', new Point(0, 1), WEST),
+  new Desk('C', new Point(1, 1), SOUTH),
+  new Desk('D', new Point(1, 0), EAST),
   // group 2
-  new Desk('E', [0, 3], "North"),
-  new Desk('F', [0, 4], "West"),
-  new Desk('G', [1, 4], "South"),
-  new Desk('H', [1, 3], "East"),
+  new Desk('E', new Point(0, 3), NORTH),
+  new Desk('F', new Point(0, 4), WEST),
+  new Desk('G', new Point(1, 4), SOUTH),
+  new Desk('H', new Point(1, 3), EAST),
   // group 3
-  new Desk('I', [3, 0], "North"),
-  new Desk('J', [3, 1], "West"),
-  new Desk('K', [4, 1], "South"),
-  new Desk('L', [4, 0], "East"),
+  new Desk('I', new Point(3, 0), NORTH),
+  new Desk('J', new Point(3, 1), WEST),
+  new Desk('K', new Point(4, 1), SOUTH),
+  new Desk('L', new Point(4, 0), EAST),
   // group 4
-  new Desk('M', [3, 3], "North"),
-  new Desk('N', [3, 4], "West"),
-  new Desk('O', [4, 4], "South"),
-  new Desk('P', [4, 3], "East"),
+  new Desk('M', new Point(3, 3), NORTH),
+  new Desk('N', new Point(3, 4), WEST),
+  new Desk('O', new Point(4, 4), SOUTH),
+  new Desk('P', new Point(4, 3), EAST),
 ];
 
 
