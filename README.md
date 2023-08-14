@@ -12,6 +12,26 @@ Rewrite the problem in to a Constraint-Satisfiability Problem (CSP). With some s
 
 This currently uses a modified [SolverJS class](https://github.com/johannesheesterman/SolverJS) that does naive backtracking to explore all combinations. Input data is statically defined in code.
 
+### Data Model
+
+Students are just `const studentNames: string[]`.
+
+Desks have a unique `id`, `location: int[2]`, and `heading` (but heading is broken currently). The desk arrangement is defined as `const deskArrangement: Desk[]`.
+
+### Usage
+
+After editing the `const`s at the end of `main.js`, run `node main.js`. Example output:
+```log
+placed Ethan - Entering again with Ethan->A
+placed Olivia - Entering again with Ethan->A,Olivia->E
+placed Liam - Entering again with Ethan->A,Olivia->E,Liam->C
+placed Ava - Entering again with Ethan->A,Olivia->E,Liam->C,Ava->B
+[...]
+placed Grace - Entering again with Ethan->A,Olivia->E,Liam->C,Ava->B,Jackson->F,Emma->D,Noah->G,Sophia->H,Mason->I,Isabella->J,Alice->K,Bob->L,Charlie->M,David->N,Frank->O,Grace->P
+yay
+```
+`yay` meaning a full solution was found. (There's a chance the output is missing the last student, but should be trivial to place given the rest.)
+
 ## Goals
 
 - [x] Naive implementation
