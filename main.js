@@ -89,15 +89,7 @@ class Constraint {
   }
 }
 
-///// Generators
-
-function generate2DArray(rows, columns) {
-  const array2D = new Array(rows);
-  for (let i = 0; i < rows; i++) {
-    array2D[i] = new Array(columns);
-  }
-  return array2D;
-}
+// Maths
 
 function areNeighboring(locationA, locationB) {
   const dx = Math.abs(locationA.x - locationB.x);
