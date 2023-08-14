@@ -100,8 +100,8 @@ function generate2DArray(rows, columns) {
 }
 
 function areNeighboring(locationA, locationB) {
-  const dx = Math.abs(locationA[0] - locationB[0]);
-  const dy = Math.abs(locationA[1] - locationB[1]);
+  const dx = Math.abs(locationA.x - locationB.x);
+  const dy = Math.abs(locationA.y - locationB.y);
 
   // Check if the locations are within 1 unit of each other
   if (dx <= 1 && dy <= 1) {
@@ -206,7 +206,7 @@ class Desk {
 
 const cannotShare = (a, b) => a.id != b.id;
 const cannotNeighbor = (a, b) => !areNeighboring(a.location, b.location);
-const cannotFace = (a, b) => !a.isFacing(b, 90);
+const cannotFace = (a, b) => !a.isFacing(b, 360) && cannotNeighbor(a,b);
 
 // Input
 
