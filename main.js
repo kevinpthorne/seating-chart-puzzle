@@ -110,14 +110,14 @@ function areNeighboring(locationA, locationB) {
 
 class Point {
   constructor(x, y) {
-      this.x = x;
-      this.y = y;
+    this.x = x;
+    this.y = y;
   }
 }
 class Vector2 {
   constructor(x, y) {
-      this.x = x;
-      this.y = y;
+    this.x = x;
+    this.y = y;
   }
 }
 
@@ -125,7 +125,7 @@ function magnitude(vector2) {
   return Math.sqrt(vector2.x ** 2 + vector2.y ** 2);
 }
 function dotProduct(vector2A, vector2B) {
-  return vector2A.x*vector2B.x + vector2A.y*vector2B.y;
+  return vector2A.x * vector2B.x + vector2A.y * vector2B.y;
 }
 function toDegrees(radians) {
   return radians * 180 / Math.PI;
@@ -138,27 +138,18 @@ function angleBetween(vector2A, vector2B) {
   return Math.acos(dproduct / (magU * magV)); // radians
 }
 
-
 function areFacingEachOther(heading1, location1, heading2, location2, fieldOfViewInDegrees) {
-  // super official formula: https://youtu.be/dYPRYO8QhxU?t=51
-
-  //side 1
-  const dx1 = location2.x - location1.x;
-  const dy1 = location2.y - location1.y;
-
-  const v1 = new Vector2(dx1, dy1);
-  const location1Angle = toDegrees(angleBetween(heading1, v1));
-
-  //side 2
-  const dx2 = location1.x - location2.x;
-  const dy2 = location1.y - location2.y;
-
-  const v2 = new Vector2(dx2, dy2);
-  const location2Angle = toDegrees(angleBetween(heading2, v2));
-
-  return location1Angle < (fieldOfViewInDegrees / 2) && location2Angle < (fieldOfViewInDegrees / 2);
+  return isFacing(heading1, location1, location2, fieldOfViewInDegrees) && isFacing(heading2, location2, location1, fieldOfViewInDegrees);
 }
 
+function isFacing(heading1, location1, location2, fieldOfViewInDegrees) {
+  // super official formula: https://youtu.be/dYPRYO8QhxU?t=51
+  const dx1 = location2.x - location1.x;
+  const dy1 = location2.y - location1.y;
+  const v1 = new Vector2(dx1, dy1);
+  const angle = toDegrees(angleBetween(heading1, v1));
+  return angle < (fieldOfViewInDegrees / 2);
+}
 const NORTH = new Vector2(0, 1);
 const SOUTH = new Vector2(0, -1);
 const EAST = new Vector2(1, 0);
@@ -183,7 +174,7 @@ class Desk {
     this.location = location;
     this.heading = heading;
   }
-  isFacing(otherDesk, fov) {
+  isFacingEachOther(otherDesk, fov) {
     return areFacingEachOther(
       this.heading,
       this.location,
@@ -198,7 +189,7 @@ class Desk {
 
 const cannotShare = (a, b) => a.id != b.id;
 const cannotNeighbor = (a, b) => !areNeighboring(a.location, b.location);
-const cannotFace = (a, b) => !a.isFacing(b, 150) && cannotNeighbor(a,b);
+const cannotFace = (a, b) => !a.isFacingEachOther(b, 150) && cannotNeighbor(a, b);
 
 // Input
 
