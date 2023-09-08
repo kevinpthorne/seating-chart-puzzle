@@ -1,0 +1,30 @@
+{
+  "name": "seating-chart-app",
+  "version": "1.0.0",
+  "description": "-",
+  "private": true,
+  "scripts": {
+    "all": "run-s build",
+    "build": "webpack --mode production",
+    "dev": "webpack-dev-server",
+    "start": "run-s dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevinpthorne/seating-chart-puzzle.git"
+  },
+  "author": "Kevin Thorne",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kevinpthorne/seating-chart-puzzle/issues"
+  },
+  "homepage": "https://github.com/kevinpthorne/seating-chart-puzzle#readme",
+  "devDependencies": {
+    "copy-webpack-plugin": "^11.0.0",
+    "diagram-js": "^12.3.0",
+    "npm-run-all": "^4.1.5",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
+  }
+}
