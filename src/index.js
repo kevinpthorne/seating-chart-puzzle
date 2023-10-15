@@ -3,6 +3,7 @@ import { Point, acceptAllPairs } from './lib/math';
 import * as dir from './lib/directions';
 import * as constraints from './constraints';
 import Desk from './desk';
+import { createElement } from './lib/javascriptsucks';
 
 let studentNames = [];
 /*  "Ethan",
@@ -80,14 +81,47 @@ function solve(studentNames, deskArrangement, rules, noSharing = true) {
 }
 
 function hookUi() {
+  // names
   const names = document.getElementById("names");
   names.addEventListener("input", function() {
     studentNames = this.value.split("\n");
     console.log(studentNames);
   });
   names.dispatchEvent(new Event('input'));
+  // todo save names? I think the browser does this for me
+
+  // load desk arrangement from memory
+
+  // load rules from memory
 
   document.getElementById("solveBtn").addEventListener("click", () => solve(studentNames, deskArrangement, rules));
+
+  // desk editor
+  const editor = document.getElementById("editor");
+  document.getElementById("newDeskBtn").addEventListener("click", () => {
+    const id = crypto.randomUUID();
+    const el = createElement("rect", {}, {
+      id,
+      width: "100",
+      height: "100",
+      x: "10",
+      y: "10",
+      fill: "black",
+      draggable: "true"
+    });
+    editor.appendChild(el);
+    // force SVG rerender
+    const data = editor.innerHTML;
+    editor.innerHTML = '';
+    editor.innerHTML = data;
+    // bind events
+    const newDeskEl = document.getElementById(id);
+    newDeskEl.addEventListener("drag", (event) => console.log('dragging'));
+    newDeskEl.addEventListener("click", () => console.log(`rect ${id} clicked`));
+
+
+    console.log('new rect');
+  });
 }
 
 hookUi();

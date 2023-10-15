@@ -7,18 +7,22 @@
     </head>
     <body>
         <div id="container">
-            <svg></svg>
+            <svg id="editor" xmlns="http://www.w3.org/2000/svg"></svg>
+            <div class="toolbar" id="tools">
+                <button class="small-btn" id="newDeskBtn" name="newDeskBtn">+ Desk</button>
+            </div>
         </div>
 
         <div id="config">
             <div>
-                <h3>Student Names</h3>
+                <h3>Student Names <button id="solveBtn" name="solveBtn" class="small-btn">Place Students</button></h3>
                 <textarea id="names" name="names"></textarea>
             </div>
             <div>
-                <h3>Constraints</h3>
-                <button id="newConstraintBtn" name="newConstraintBtn">+</button>
-                <button id="solveBtn" name="solveBtn">Solve</button>
+                <h3>Rules <button id="newConstraintBtn" name="newConstraintBtn" class="small-btn">+ Rule</button></h3>
+                <hr />
+                <div id="rulesEditor"></div>
+                
             </div>
         </div>
 
